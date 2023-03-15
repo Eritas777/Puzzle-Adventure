@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Penta_animationScript : MonoBehaviour
+{
+    public GameObject player;
+    Rigidbody2D rbp;
+    Rigidbody2D rb;
+    Animator animator;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rbp = player.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //float dins = Vector2.Distance(player.transform.position, rb.position);
+        float dins = (rbp.position-rb.position).magnitude;
+        animator.SetFloat("distance",dins);
+        Debug.Log(dins);
+    }
+}
