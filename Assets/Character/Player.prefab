@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: a5f332c2974ac9f44bd489ff966d34bc, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbc6dd297c90574bbf667c905722ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  d: 0.57
+  d: 1
   d2: -0.1
 --- !u!1 &1720404868014298505
 GameObject:
@@ -407,7 +407,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  projectilePrefab: {fileID: 0}
+  frostyRush: {fileID: 244386204444302785, guid: 9d0f1738311fbeb4f81a2a2fb974cd02, type: 3}
+  poisonSplash: {fileID: 4564266626028052781, guid: 0412b5963e6c2854294ce437994ec490, type: 3}
 --- !u!50 &6625229897551262568
 Rigidbody2D:
   serializedVersion: 4
@@ -470,7 +471,7 @@ BoxCollider2D:
   m_Offset: {x: -0.06931208, y: 0.0835526}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.9142857, y: 0.9142857}
     newSize: {x: 0.9142857, y: 0.9142857}
     adaptiveTilingThreshold: 0.5

@@ -5095,14 +5095,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6625229897551262569, guid: c071953968975b14f8263f6dd2f3a29e, type: 3}
-      propertyPath: frostyRush
-      value: 
-      objectReference: {fileID: 244386204444302785, guid: 9d0f1738311fbeb4f81a2a2fb974cd02, type: 3}
-    - target: {fileID: 6625229897551262569, guid: c071953968975b14f8263f6dd2f3a29e, type: 3}
-      propertyPath: poisonSplash
-      value: 
-      objectReference: {fileID: 4564266626028052781, guid: 0412b5963e6c2854294ce437994ec490, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
