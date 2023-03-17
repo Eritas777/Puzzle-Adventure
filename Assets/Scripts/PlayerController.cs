@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
+    public GameObject frostyRush, poisonSplash;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,5 +70,25 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue movementValue){
         movementInput = movementValue.Get<Vector2>();
+    }
+
+    void FrostyRush()
+    {
+        GameObject projectileObject = Instantiate(frostyRush, rb.position + Vector2.up * 0.5f, Quaternion.identity);
+        FrostyRushProjectile projectile = projectileObject.GetComponent<FrostyRushProjectile>();
+        projectile.Launch(movementInput, 300);
+    }
+
+    void PoisonSplash()
+    {
+        GameObject projectileObject = Instantiate(poisonSplash, rb.position + Vector2.up * 0.5f, Quaternion.identity);
+        PoisonSplashProjectile projectile = projectileObject.GetComponent<PoisonSplashProjectile>();
+        projectile.Launch(movementInput, 300);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z)) FrostyRush();
+        if (Input.GetKeyDown(KeyCode.C)) PoisonSplash();
     }
 }
