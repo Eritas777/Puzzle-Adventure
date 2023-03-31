@@ -57,7 +57,7 @@ public class Inventory_script : MonoBehaviour
                     connectionString.Open();
 
                     using (var command = connectionString.CreateCommand()){
-                        command.CommandText = "SELECT * FROM items WHERE png_name IS '"+item.name.ToString()+"';";
+                        command.CommandText = "SELECT * FROM items WHERE png_name IS '"+item.name.ToString().Substring(0,2)+"';";
                         Debug.Log("Получен ID");
 
                         using(reader = command.ExecuteReader()){
