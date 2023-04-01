@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
-    public GameObject frostyRush, poisonSplash, poweredFrostyRush;
+    public GameObject frostyRush, poisonSplash, poweredFrostyRush, aura;
+    AuraController auraController;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        auraController = aura.GetComponent<AuraController>();
     }
 
     private void FixedUpdate(){
@@ -93,10 +95,17 @@ public class PlayerController : MonoBehaviour
         projectile.Launch(movementInput, 300);
     }
 
+    void Aura()
+    {
+        auraController.isWorking = true;
+        auraController.SpawnAura();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z)) FrostyRush();
         if (Input.GetKeyDown(KeyCode.C)) PoisonSplash();
-        if (Input.GetKeyDown(KeyCode.X)) PoweredFrostyRush(); 
+        if (Input.GetKeyDown(KeyCode.X)) PoweredFrostyRush();
+        if (Input.GetKeyDown(KeyCode.N)) Aura();
     }
 }
