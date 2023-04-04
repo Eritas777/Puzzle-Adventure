@@ -19,9 +19,19 @@ public class FrostyRushProjectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        Destroy(gameObject);
-        CrystalBarrierController barrier = other.collider.GetComponent<CrystalBarrierController>();
-        barrier.GetStoned();
+        if (other.gameObject.tag == "Crystal")
+        {
+            Destroy(gameObject);
+            CrystalBarrierController barrier = other.collider.GetComponent<CrystalBarrierController>();
+            barrier.GetStoned();
+        }
+        else if (other.gameObject.tag == "Fire")
+        {
+            Destroy(gameObject);
+            FireWallController fireWall = other.collider.GetComponent<FireWallController>();
+            fireWall.FireWentOut();
+        }
+        else Destroy(gameObject);
     }
 
     // Update is called once per frame
