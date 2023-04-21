@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     public float movespeed = 1f;
     public float collisionOffset = 0.05f;
+    public GameObject square;
 
     public ContactFilter2D movementfilter;
 

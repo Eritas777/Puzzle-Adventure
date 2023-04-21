@@ -28,7 +28,7 @@ public class Penta_animationScript : MonoBehaviour
         animator.SetFloat("distance",dins);
         if ((dins < 1)&(Input.GetKeyDown(KeyCode.E))){
             int sceneindx = SceneManager.GetActiveScene().buildIndex;
-            if (sceneindx == 3) SceneManager.LoadScene(0);
+            if (sceneindx == 2) SceneManager.LoadScene(0);
             else
             {
                 SceneManager.LoadScene(sceneindx+1);
