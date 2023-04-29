@@ -118,10 +118,8 @@ public class craft_script : MonoBehaviour
                         command.CommandText = "SELECT item_count FROM inventory WHERE item_id = '"+iID+"' AND player_id = '"+playerID+"'";
                         int result = Convert.ToInt32(command.ExecuteScalar().ToString());
                         string query;
-
                         if (result > 1) query = "UPDATE inventory SET item_count = item_count-1 WHERE item_id = '"+iID+"' AND player_id = '"+playerID+"';";
                         else query = "DELETE FROM inventory WHERE item_id = '"+iID+"' AND player_id = "+playerID+";";
-
                         command.CommandText = query;
                         command.ExecuteNonQuery();
                     }
