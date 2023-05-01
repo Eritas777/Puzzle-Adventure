@@ -1,10 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Data;
+using Mono.Data.Sqlite;
 
 public class PlayerController : MonoBehaviour
 {
+    private string dbName = "URI=file:GameProject.db";
+    private IDataReader reader;
+    private string playerID;
 
     public float movespeed = 1f;
     public float collisionOffset = 0.05f;
@@ -19,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject frostyRush, poisonSplash, poweredFrostyRush, aura;
     AuraController auraController;
+    GameObject[] magicBarriers;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +34,24 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         auraController = aura.GetComponent<AuraController>();
+        magicBarriers = GameObject.FindGameObjectsWithTag("MagicBarrier");
+
+        using (var connectionString = new SqliteConnection(dbName)){
+            Debug.Log(connectionString.ToString());
+            connectionString.Open();
+
+            using (var command = connectionString.CreateCommand()){
+                command.CommandText = "SELECT * FROM players;";
+
+                using (reader = command.ExecuteReader()){
+                    while (reader.Read()){
+                        playerID = reader["id"].ToString();
+                    }
+                }
+            }
+            connectionString.Close();
+        }
+
     }
 
     private void FixedUpdate(){
@@ -94,13 +119,64 @@ public class PlayerController : MonoBehaviour
     {
         auraController.isWorking = true;
         auraController.SpawnAura();
+        foreach (GameObject barrier in magicBarriers)
+        {
+            BoxCollider2D collider = barrier.GetComponent<BoxCollider2D>();
+            collider.enabled = false;
+        }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z)) FrostyRush();
-        if (Input.GetKeyDown(KeyCode.C)) PoisonSplash();
-        if (Input.GetKeyDown(KeyCode.X)) PoweredFrostyRush();
-        if (Input.GetKeyDown(KeyCode.N)) Aura();
+        if (Input.GetKeyDown(KeyCode.Z)) if (spellCount(1) > 0) {spellUsed(1); FrostyRush();}
+        if (Input.GetKeyDown(KeyCode.C)) if (spellCount(2) > 0) {spellUsed(2); PoisonSplash();}
+        if (Input.GetKeyDown(KeyCode.X)) if (spellCount(6) > 0) {spellUsed(6); PoweredFrostyRush();}
+        if (Input.GetKeyDown(KeyCode.N)) if (spellCount(3) > 0) {spellUsed(3); Aura();}
+        if (!auraController.isWorking)
+        {
+            foreach (GameObject barrier in magicBarriers)
+            {
+                BoxCollider2D collider = barrier.GetComponent<BoxCollider2D>();
+                collider.enabled = true;
+            }
+        }
+    }
+
+    private int spellCount(int spellID){
+        int spellc = 0;
+        using (var connectionString = new SqliteConnection(dbName)){
+            connectionString.Open();
+
+            using (var command = connectionString.CreateCommand()){
+                command.CommandText = "SELECT count FROM player_spells WHERE spell_id = '"+spellID+"' AND player_id = '"+playerID+"'";
+                var comresult = command.ExecuteScalar();
+                if (comresult != null) {
+                    spellc = Convert.ToInt32(comresult.ToString());
+                }
+                else {
+                    spellc = 0;
+                }
+            }
+            connectionString.Close();
+        }
+        return spellc;
+    }
+
+    private void spellUsed(int spellID){
+        using (var connectionString = new SqliteConnection(dbName))
+        {
+            connectionString.Open();
+            using (var command = connectionString.CreateCommand())
+            {
+                command.CommandText = "SELECT count FROM player_spells WHERE spell_id = '"+spellID+"' AND player_id = '"+playerID+"'";
+                int result = Convert.ToInt32(command.ExecuteScalar().ToString());
+                string query;
+                if (result > 1) query = "UPDATE player_spells SET count = count-1 WHERE spell_id = '"+spellID+"' AND player_id = '"+playerID+"';";
+                else query = "DELETE FROM player_spells WHERE spell_id = '"+spellID+"' AND player_id = "+playerID+";";
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+            connectionString.Close();
+        }
     }
 }

@@ -935,7 +935,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c503b1b920cbe9f4fa55d1500c08e0a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 61f399a922ba2584a922ae20e06f73df, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c503b1b920cbe9f4fa55d1500c08e0a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f014480d75793440aedc158602e9c47, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1687,7 +1687,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u043E\u0434\u0430"
+  m_text: "\u0411\u0443\u0442\u044B\u043B\u0435\u043A \u0441 \u0432\u043E\u0434\u043E\u0439"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1982,6 +1982,7 @@ GameObject:
   - component: {fileID: 7756398914327364422}
   - component: {fileID: 7756398914327364421}
   - component: {fileID: 7756398914327364420}
+  - component: {fileID: 941051248}
   m_Layer: 5
   m_Name: FB
   m_TagString: Untagged
@@ -2037,7 +2038,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c503b1b920cbe9f4fa55d1500c08e0a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 85e29eddfb6ad0f43a1fb19489f23f7c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2090,7 +2091,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7756398914327364421}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 941051248}
+        m_TargetAssemblyTypeName: craft_script, Assembly-CSharp
+        m_MethodName: spellclick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &941051248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7756398914327364426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aa367c33b7fdd4995755766e65b303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_name: {fileID: 7756398914667093556}
+  create_button: {fileID: 7756398915770765680}
 --- !u!1 &7756398914418516332
 GameObject:
   m_ObjectHideFlags: 0
@@ -4284,7 +4311,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c503b1b920cbe9f4fa55d1500c08e0a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a460c9f43c216d46aeba8be82703827, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4903,7 +4930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7756398915447569580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5280,7 +5307,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c503b1b920cbe9f4fa55d1500c08e0a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7111b2b6a6b5d1b48bd3ed711132a680, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6622,7 +6649,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8954379451836523234}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6875,7 +6902,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movespeed: 2
   collisionOffset: 0
-  square: {fileID: 0}
   movementfilter:
     useTriggers: 0
     useLayerMask: 0

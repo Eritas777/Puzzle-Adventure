@@ -25,13 +25,11 @@ public class AuraController : MonoBehaviour
         {
             timeAura -= Time.deltaTime;
             if (timeAura <= 0) isWorking = false;
-            MagicBarrierController.colider.enabled = false;
         }
         Debug.Log(timeAura);
         if (!isWorking)
         {
             sr.enabled = false;
-            MagicBarrierController.colider.enabled = true;
         }
     }
 

@@ -73,14 +73,12 @@ public class inv_anim_script : MonoBehaviour
             using (var command = connectionString.CreateCommand()){
                 for (int i = 0; i < countobjectsWithTag.Length; i++)
                 {
-                    Debug.Log("i = " + i + ", item name = " + item_names[i].text);
                     command.CommandText = "SELECT id FROM items WHERE name = '"+item_names[i].text+"'";
                     var iID = Convert.ToInt32(command.ExecuteScalar().ToString());
                     command.CommandText = "SELECT item_count FROM inventory WHERE item_id = '"+iID+"' AND player_id = '"+playerID+"'";
                     var comresult = command.ExecuteScalar();
                     if (comresult != null){
                         var result = Convert.ToInt32(comresult.ToString());
-                        Debug.Log(result);
                         if (result > 0) item_count[i].text = "Количество: " + result.ToString();
                     }
                     else item_count[i].text = "Количество: 0";
