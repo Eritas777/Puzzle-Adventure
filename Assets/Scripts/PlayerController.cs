@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate(){
         if(movementInput != Vector2.zero){
             bool success = TryMove(movementInput);
-
                 if(!success) {
                     success = TryMove(new Vector2(movementInput.x, 0));
                 }
@@ -41,10 +40,11 @@ public class PlayerController : MonoBehaviour
                     success = TryMove(new Vector2(0, movementInput.y));
                 }
                 
-                animator.SetBool("isMoving", success);
-            } else {
+                animator.SetBool("isMoving", success);}
+            else {
                 animator.SetBool("isMoving", false);
             }
+            // Поворот спрайта персонажа
             if(movementInput.x < 0) {
             spriteRenderer.flipX = true;
             } 
@@ -52,21 +52,16 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = false;
             }
     }
-
-        private bool TryMove(Vector2 direction) {
+    
+    private bool TryMove(Vector2 direction) {
         if(direction != Vector2.zero) {
-            int count = rb.Cast(
-                direction,movementfilter,castCollisions,movespeed * Time.fixedDeltaTime + collisionOffset);
-
+            int count = rb.Cast(direction,movementfilter,castCollisions,movespeed * Time.fixedDeltaTime + collisionOffset);
             if(count == 0){
                 rb.MovePosition(rb.position + direction * movespeed * Time.fixedDeltaTime);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+                return true;}
+            else { return false;}
+        } 
+        else {return false;}
     }
 
 

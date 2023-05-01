@@ -29,6 +29,8 @@ public class Menu_script : MonoBehaviour
                 command.ExecuteNonQuery();
                 command.CommandText = "CREATE TABLE IF NOT EXISTS spell_recept(    item_id integer,    spell_id integer,    PRIMARY KEY(item_id,spell_id),    FOREIGN KEY (item_id) REFERENCES items(id),    FOREIGN KEY (spell_id) REFERENCES spells(id))";
                 command.ExecuteNonQuery();
+                command.CommandText = "CREATE TABLE IF NOT EXISTS player_spells (spell_id	INTEGER, player_id	INTEGER, count	INTEGER, FOREIGN KEY(spell_id) REFERENCES spells(id), FOREIGN KEY(player_id) REFERENCES players(id));";
+                command.ExecuteNonQuery();
             }
             connectionString.Close(); 
         }   

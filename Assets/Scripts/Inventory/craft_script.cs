@@ -27,7 +27,7 @@ public class craft_script : MonoBehaviour
     void Start()
     {
         eventSystem = EventSystem.current;
-
+        create_button.SetActive(false);
         objectsWithTag = GameObject.FindGameObjectsWithTag("RItem");
         recept_items = new TMP_Text[objectsWithTag.Length];
         for (int i = 0; i < objectsWithTag.Length; i++)
@@ -75,6 +75,7 @@ public class craft_script : MonoBehaviour
                         spell_name = command.ExecuteScalar().ToString();
                     }
                     s_name.text = spell_name;
+                    Debug.Log(s_name.text);
 
                     using (var command = connectionString.CreateCommand()){
                         command.CommandText = "SELECT i.name AS i_name, s.name FROM items i JOIN spell_recept sr ON i.id = sr.item_id JOIN spells s ON s.id = sr.spell_id WHERE s.png_name = '"+spell_png_name+"';";
@@ -128,5 +129,30 @@ public class craft_script : MonoBehaviour
 
             }
         }
+        using (var connectionString = new SqliteConnection(dbName))
+        {
+            connectionString.Open();
+            using (var command = connectionString.CreateCommand())
+            {
+                command.CommandText = "SELECT id FROM spells WHERE name = '"+s_name.text.ToString()+"'";
+                var sID = Convert.ToInt32(command.ExecuteScalar().ToString());
+                Debug.Log("ID заклинания - " + sID.ToString());
+
+                command.CommandText = "SELECT COUNT(*) FROM player_spells WHERE spell_id = '"+sID+"' AND player_id = '"+playerID+"';";
+                int result1 = Convert.ToInt32(command.ExecuteScalar().ToString());
+                string query;
+                if (result1 > 0){
+                    query = "UPDATE player_spells SET count = count + 1 WHERE spell_id = '"+sID+"' AND player_id = '"+playerID+"';";
+                }
+                else{
+                    query = "INSERT INTO player_spells (count, spell_id, player_id) VALUES (1, '"+sID+"', '"+playerID+"');";
+                }
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+            connectionString.Close();
+        }
+
+
     }
 }
