@@ -8,13 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main_Menu.unity
     guid: eb22598412c33ad429a44f64772490b0
-  - enabled: 0
-    path: Assets/Scenes/TestScene.unity
-    guid: 980aa151ca13da4408cf0a7bd950bdd9
-  - enabled: 1
-    path: Assets/Scenes/Catacomb.unity
-    guid: debd469cdeecb354c9b5a4fece787f83
   - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 46b85dbae426c844ea2585e71dfbc927
+  - enabled: 1
+    path: Assets/Scenes/TheEnd.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
