@@ -19,6 +19,8 @@ public class craft_script : MonoBehaviour
     private EventSystem eventSystem;
     private GameObject[] objectsWithTag;
     private TMP_Text[] recept_items;
+    private GameObject[] objectsSpellCounters;
+    private TMP_Text[] spellCounters;
     public TMP_Text s_name;
 
     public GameObject create_button;
@@ -30,9 +32,18 @@ public class craft_script : MonoBehaviour
         create_button.SetActive(false);
         objectsWithTag = GameObject.FindGameObjectsWithTag("RItem");
         recept_items = new TMP_Text[objectsWithTag.Length];
+
+        objectsSpellCounters = GameObject.FindGameObjectsWithTag("spellcount");
+        spellCounters = new TMP_Text[objectsSpellCounters.Length];
+
         for (int i = 0; i < objectsWithTag.Length; i++)
         {
             recept_items[i] = objectsWithTag[i].GetComponent<TMP_Text>();
+        }
+
+        for (int i = 0; i < objectsSpellCounters.Length; i++)
+        {
+            spellCounters[i] = objectsSpellCounters[i].GetComponent<TMP_Text>();
         }
 
         using (var connectionString = new SqliteConnection(dbName)){
@@ -55,7 +66,26 @@ public class craft_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        using (var connectionString = new SqliteConnection(dbName)){
+            connectionString.Open();
 
+            using (var command = connectionString.CreateCommand()){
+                for (int i = 0; i < objectsSpellCounters.Length; i++)
+                {
+                    command.CommandText = "SELECT id FROM spells WHERE png_name = '"+objectsSpellCounters[i].name+"'";
+                    var sID = Convert.ToInt32(command.ExecuteScalar().ToString());
+                    command.CommandText = "SELECT count FROM player_spells WHERE spell_id = '"+sID+"' AND player_id = '"+playerID+"'";
+                    var comresult = command.ExecuteScalar();
+                    if (comresult != null){
+                        var result = Convert.ToInt32(comresult.ToString());
+                        spellCounters[i].text = result.ToString();
+                    }
+                    else spellCounters[i].text = "0";
+                }
+            }
+
+            connectionString.Close();
+        } 
     }
 
     public void spellclick(){

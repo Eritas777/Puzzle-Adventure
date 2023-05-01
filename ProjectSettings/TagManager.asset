@@ -10,6 +10,7 @@ TagManager:
   - counter
   - IName
   - MagicBarrier
+  - spellcount
   layers:
   - Default
   - TransparentFX
