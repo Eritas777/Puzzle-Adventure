@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject frostyRush, poisonSplash, poweredFrostyRush, aura;
     AuraController auraController;
+    GameObject[] magicBarriers;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         auraController = aura.GetComponent<AuraController>();
+        magicBarriers = GameObject.FindGameObjectsWithTag("MagicBarrier");
     }
 
     private void FixedUpdate(){
@@ -94,6 +96,11 @@ public class PlayerController : MonoBehaviour
     {
         auraController.isWorking = true;
         auraController.SpawnAura();
+        foreach (GameObject barrier in magicBarriers)
+        {
+            BoxCollider2D collider = barrier.GetComponent<BoxCollider2D>();
+            collider.enabled = false;
+        }
     }
 
     private void Update()
@@ -102,5 +109,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C)) PoisonSplash();
         if (Input.GetKeyDown(KeyCode.X)) PoweredFrostyRush();
         if (Input.GetKeyDown(KeyCode.N)) Aura();
+        if (!auraController.isWorking)
+        {
+            foreach (GameObject barrier in magicBarriers)
+            {
+                BoxCollider2D collider = barrier.GetComponent<BoxCollider2D>();
+                collider.enabled = true;
+            }
+        }
     }
 }
