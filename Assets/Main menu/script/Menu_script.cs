@@ -73,6 +73,11 @@ public class Menu_script : MonoBehaviour
         animator.SetBool("active", true);
     }
 
+    public void ExitClick()
+    {
+        Application.Quit();
+    }
+
     // Update is called once per frame  
     void Update()   
     {   
