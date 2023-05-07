@@ -14,6 +14,7 @@ public class PoisonSplashProjectile : MonoBehaviour
     public void Launch(Vector2 direction, float force)
     {
         rb.AddForce(direction * force);
+        Destroy(gameObject, 4);
     }
 
     void OnCollisionEnter2D(Collision2D other)
