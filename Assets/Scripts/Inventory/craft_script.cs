@@ -8,6 +8,7 @@ using System.IO;
 using UnityEngine.EventSystems;
 using System.Data;
 
+
 public class craft_script : MonoBehaviour
 {
 
@@ -29,7 +30,6 @@ public class craft_script : MonoBehaviour
     void Start()
     {
         eventSystem = EventSystem.current;
-        create_button.SetActive(false);
         objectsWithTag = GameObject.FindGameObjectsWithTag("RItem");
         recept_items = new TMP_Text[objectsWithTag.Length];
 
@@ -89,8 +89,10 @@ public class craft_script : MonoBehaviour
     }
 
     public void spellclick(){
+        create_button.SetActive(true); // добавляем эту строку
+
         string spell_name = "";
-        create_button.SetActive(false);
+            
         for(int i = 0; i < objectsWithTag.Length; i++){
             recept_items[i].text = "";
             objectsWithTag[i].SetActive(false);
@@ -98,41 +100,42 @@ public class craft_script : MonoBehaviour
         if (eventSystem != null && eventSystem.currentSelectedGameObject != null){
             int item_idc = 0;
             string spell_png_name = eventSystem.currentSelectedGameObject.name;
-                using (var connectionString = new SqliteConnection(dbName)){
-                    connectionString.Open();
-                    using (var command = connectionString.CreateCommand()){
-                        command.CommandText = "SELECT name FROM spells WHERE png_name IS '"+spell_png_name+"';";
-                        spell_name = command.ExecuteScalar().ToString();
-                    }
-                    s_name.text = spell_name;
-                    Debug.Log(s_name.text);
+            using (var connectionString = new SqliteConnection(dbName)){
+                connectionString.Open();
+                using (var command = connectionString.CreateCommand()){
+                    command.CommandText = "SELECT name FROM spells WHERE png_name IS '"+spell_png_name+"';";
+                    spell_name = command.ExecuteScalar().ToString();
+                }
+                s_name.text = spell_name;
+                Debug.Log(s_name.text);
 
-                    using (var command = connectionString.CreateCommand()){
-                        command.CommandText = "SELECT i.name AS i_name, s.name FROM items i JOIN spell_recept sr ON i.id = sr.item_id JOIN spells s ON s.id = sr.spell_id WHERE s.png_name = '"+spell_png_name+"';";
-                        using(reader = command.ExecuteReader()){
-                            while (reader.Read()){
-                                objectsWithTag[item_idc].SetActive(true);
-                                recept_items[item_idc].text = reader["i_name"].ToString();
-                                item_idc++;
-                            }
+                using (var command = connectionString.CreateCommand()){
+                    command.CommandText = "SELECT i.name AS i_name, s.name FROM items i JOIN spell_recept sr ON i.id = sr.item_id JOIN spells s ON s.id = sr.spell_id WHERE s.png_name = '"+spell_png_name+"';";
+                    using(reader = command.ExecuteReader()){
+                        while (reader.Read()){
+                            objectsWithTag[item_idc].SetActive(true);
+                            recept_items[item_idc].text = reader["i_name"].ToString();
+                            item_idc++;
                         }
                     }
-                    connectionString.Close();
                 }
-
-                using (var connectionString = new SqliteConnection(dbName)){
-                    connectionString.Open();
-                        using (var command = connectionString.CreateCommand()){
-                            command.CommandText = "SELECT COUNT() FROM inventory i INNER JOIN spell_recept sr ON sr.item_id = i.item_id INNER JOIN spells s ON s.id = sr.spell_id WHERE s.png_name = '"+spell_png_name+"' AND player_id = '"+playerID+"';";
-                            int result = Convert.ToInt32(command.ExecuteScalar().ToString());
-                            Debug.Log(result);
-                            if(result == item_idc) create_button.SetActive(true);
-                    }
-                    connectionString.Close();
-                }
-
+                connectionString.Close();
             }
+
+            using (var connectionString = new SqliteConnection(dbName)){
+                connectionString.Open();
+                using (var command = connectionString.CreateCommand()){
+                    command.CommandText = "SELECT COUNT() FROM inventory i INNER JOIN spell_recept sr ON sr.item_id = i.item_id INNER JOIN spells s ON s.id = sr.spell_id WHERE s.png_name = '"+spell_png_name+"' AND player_id = '"+playerID+"';";
+                    int result = Convert.ToInt32(command.ExecuteScalar().ToString());
+                    Debug.Log("result: " + result + ", item_idc: " + item_idc);
+                    if(result == item_idc) {create_button.SetActive(true);}
+                    else create_button.SetActive(false);
+                }
+                connectionString.Close();
+            }
+        }
     }
+
 
     public void spell_craft(){
         foreach (var tmp_t in recept_items)
